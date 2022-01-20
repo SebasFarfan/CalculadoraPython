@@ -32,12 +32,26 @@ def numeroPulsado(num):
     else:
         numeroPantalla.set(numeroPantalla.get()+num)
 
+# ---------------- convertidor de número---------------
+def convertidor(num):
+    dato=None
+    for conv in (int, float, complex):
+        try:
+            dato=conv(num)
+            break
+        except ValueError:
+            pass
+    return dato
+
 # --------------- operación suma---------------------
 def sumar(num):
     global operacion
     global resultado
-
-    resultado+=int(num)
+    dato=convertidor(num)
+    if dato!=None:
+      resultado+=dato
+    else:
+      resultado='Error'        
     operacion = 'suma'
 
     numeroPantalla.set(resultado)
@@ -45,7 +59,11 @@ def sumar(num):
 #----------------- funcion el_resultado------------------
 def elResultado():
     global resultado
-    numeroPantalla.set(resultado+int(numeroPantalla.get()))
+    try:
+        numeroPantalla.set(resultado+convertidor(numeroPantalla.get()))          
+    except:
+      numeroPantalla.set('Error!!')
+    
     resultado=0
 
 # --------------------- función delete-------------------------
