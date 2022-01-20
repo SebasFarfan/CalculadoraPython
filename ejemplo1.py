@@ -43,6 +43,10 @@ def convertidor(num):
             pass
     return dato
 
+# --------------- boton OFF -------------------------
+def apagar():
+    root.destroy()
+
 # --------------- operación suma---------------------
 def sumar(num):
     global operacion
@@ -56,6 +60,7 @@ def sumar(num):
 
     numeroPantalla.set(resultado)
 
+
 #----------------- funcion el_resultado------------------
 def elResultado():
     global resultado
@@ -68,12 +73,12 @@ def elResultado():
 
 # --------------------- función delete-------------------------
 def borrar():
-    if len(numeroPantalla.get())>1:
+    if len(numeroPantalla.get())>1 and numeroPantalla.get().isnumeric():
         dato=numeroPantalla.get()
         modificado=dato[0:len(dato)-1]
         numeroPantalla.set(modificado)
     elif (len(numeroPantalla.get())==1 and numeroPantalla.get()=='0'):
-        numeroPantalla.set('0')
+        numeroPantalla.set('0')    
     else:
         numeroPantalla.set('0')
 
@@ -81,7 +86,7 @@ def borrar():
 
 # filas de teclado----
 # fila de funciones especiales-----------------
-botonOff=Button(frame, text='OFF', width=7, font=('Serif', 20))
+botonOff=Button(frame, text='OFF', width=7, font=('Serif', 20), command=lambda:apagar())
 botonOff.grid(row=2, column=0)
 botonOff=Button(frame, text='AC', width=7, font=('Serif', 20))
 botonOff.grid(row=2, column=1)
