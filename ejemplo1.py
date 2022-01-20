@@ -47,6 +47,14 @@ def convertidor(num):
 def apagar():
     root.destroy()
 
+# --------------- boton AC ---------------------------
+def reiniciar():
+    global operacion
+    global resultado
+    operacion=''
+    resultado=0
+    numeroPantalla.set('0')
+
 # --------------- operación suma---------------------
 def sumar(num):
     global operacion
@@ -88,7 +96,7 @@ def borrar():
 # fila de funciones especiales-----------------
 botonOff=Button(frame, text='OFF', width=7, font=('Serif', 20), command=lambda:apagar())
 botonOff.grid(row=2, column=0)
-botonOff=Button(frame, text='AC', width=7, font=('Serif', 20))
+botonOff=Button(frame, text='AC', width=7, font=('Serif', 20), command=lambda:reiniciar())
 botonOff.grid(row=2, column=1)
 botonOff=Button(frame, text='C', width=7, font=('Serif', 20))
 botonOff.grid(row=2, column=2)
