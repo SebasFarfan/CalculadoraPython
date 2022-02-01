@@ -18,3 +18,7 @@ else:
       print('es entero')
 
 print(float('2.9')+int('2'))
+
+dato='sebas'
+if dato=='sebas':
+  print('dato es sebas')

@@ -10,7 +10,10 @@ frame.pack()
 
 operacion=''
 resultado=0
-
+operacionResta=False
+operacionSuma=False
+operacionProducto=False
+operacionDivision=False
 
 # pantalla-----------------------------------
 numeroPantalla=StringVar()
@@ -51,33 +54,71 @@ def apagar():
 def reiniciar():
     global operacion
     global resultado
+    global operacionSuma
+    global operacionResta
     operacion=''
     resultado=0
     numeroPantalla.set('0')
+    operacionResta=False
+    operacionSuma=False
 
 # --------------- operación suma---------------------
 def sumar(num):
     global operacion
     global resultado
+    global operacionSuma
+    print('valor de resultado:'+str(resultado))
+    print('valor de operacion:'+operacion)
     dato=convertidor(num)
     if dato!=None:
       resultado+=dato
     else:
-      resultado='Error'        
-    operacion = 'suma'
-
+      resultado='Error'
+    
+    operacion='suma'
+    operacionSuma=True
+    print('operacion:'+operacion)
     numeroPantalla.set(resultado)
 
+# --------------- operación resta -------------------
+def restar(num):
+    global operacion
+    global resultado
+    global operacionResta
+    bufer=0
+    dato=convertidor(num)
+    print('operacionResta:'+str(operacionResta))
+    if dato!=None:
+        if not(operacionResta):
+            resultado+=dato
+            operacionResta=True
+        else:
+            resultado-=dato    
+    else:
+        resultado='Error'
+    operacion = 'resta'
+    numeroPantalla.set(resultado)
 
 #----------------- funcion el_resultado------------------
 def elResultado():
     global resultado
+    global operacionSuma
+    # global operacion
+    # sresultado=res
+    # operacion=op
     try:
-        numeroPantalla.set(resultado+convertidor(numeroPantalla.get()))          
+        if operacionSuma:
+            numeroPantalla.set(resultado+convertidor(numeroPantalla.get()))
+            print('es suma')
+        elif operacionResta:
+            numeroPantalla.set(resultado-convertidor(numeroPantalla.get()))        
+        resultado=0
     except:
-      numeroPantalla.set('Error!!')
+        numeroPantalla.set('Error!!')    
+    print('resultado: operacionSuma:'+str(operacionSuma))
+    print('resultado: resultado:'+str(resultado))
+
     
-    resultado=0
 
 # --------------------- función delete-------------------------
 def borrar():
@@ -98,7 +139,7 @@ botonOff=Button(frame, text='OFF', width=7, font=('Serif', 20), command=lambda:a
 botonOff.grid(row=2, column=0)
 botonOff=Button(frame, text='AC', width=7, font=('Serif', 20), command=lambda:reiniciar())
 botonOff.grid(row=2, column=1)
-botonOff=Button(frame, text='C', width=7, font=('Serif', 20))
+botonOff=Button(frame, text='CE', width=7, font=('Serif', 20))
 botonOff.grid(row=2, column=2)
 botonOff=Button(frame, text='DEL', width=7, font=('Serif', 20), command=lambda:borrar())
 botonOff.grid(row=2, column=3)
@@ -128,7 +169,7 @@ boton2=Button(frame, text='2', width=7, font=('Serif', 20), command=lambda:numer
 boton2.grid(row=5, column=1)
 boton3=Button(frame, text='3', width=7, font=('Serif', 20), command=lambda:numeroPulsado('3'))
 boton3.grid(row=5, column=2)
-botonResta=Button(frame, text='-', width=7, font=('Serif', 20))
+botonResta=Button(frame, text='-', width=7, font=('Serif', 20), command=lambda:restar(numeroPantalla.get()))
 botonResta.grid(row=5, column=3)
 
 # cuarta fila-------------------
@@ -136,11 +177,11 @@ boton0=Button(frame, text='0', width=16, font=('Serif', 20), command=lambda:nume
 boton0.grid(row=6, column=0, columnspan=2)
 botonPunto=Button(frame, text='.', width=7, font=('Serif', 20), command=lambda:numeroPulsado('.'))
 botonPunto.grid(row=6, column=2)
-botonMas=Button(frame, text='+', width=7, font=('Serif', 20), command=lambda : sumar(numeroPantalla.get()))
+botonMas=Button(frame, text='+', width=7, font=('Serif', 20), command=lambda:sumar(numeroPantalla.get()))
 botonMas.grid(row=6, column=3)
 
 # quinta fila
-botonIgual=Button(frame, text='=', width=34, font=('Serif', 20), command=lambda : elResultado())
+botonIgual=Button(frame, text='=', width=34, font=('Serif', 20), command=lambda:elResultado())
 botonIgual.grid(row=7, column=0, columnspan=4)
 
 
